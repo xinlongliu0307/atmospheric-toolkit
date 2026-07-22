@@ -1,4 +1,4 @@
-from windtools.speed import wind_speed
+from windtools.speed import wind_speed, wind_direction
 from windtools.thermo import theta
 
 DIAGNOSTICS = {
