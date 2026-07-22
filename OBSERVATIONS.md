@@ -62,3 +62,27 @@ and which to keep for manual work.
 - **Close the loop with a push.** Work is only tracked when committed
   AND pushed; CI is the backstop that proves tests pass on a clean
   machine.
+
+## Tier 4 (multi-file coordination, 32B): partial, not complete
+
+The 32B made the two harder edits correctly — added wind_direction to
+speed.py with its import and formula, and updated the diagnostics.py
+import to reference it — but left the DIAGNOSTICS dictionary itself
+un-updated, an internally inconsistent state: it imported a function it
+never registered. Its third edit (the tests) was emitted as an embedded
+tool call in the final-answer slot and did not execute, so it never
+landed. The suite reported 11 passed, but that green was hollow: it ran
+only the pre-existing tests. The test that would have caught the missing
+registration was the very edit that failed to run. Completed manually by
+registering wind_direction and adding its tests (then 13 passed).
+
+Lesson: coordinated multi-file change sits at the reliable edge even for
+the 32B. It gets the mechanically obvious edits but can miss a step, and
+a passing suite can conceal the omission when the guarding test is itself
+the un-landed edit. Verify content and file count, not the exit code.
+
+Harness note: an embedded tool call in the final-answer slot was dropped
+for the third time. The single-quote recovery fix handles calls the
+extractor processes, but a call that lands in the final-answer branch
+bypasses it. Bounded, known limitation; careful manual verification
+catches its consequences.
