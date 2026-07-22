@@ -3,5 +3,6 @@ from windtools.thermo import theta
 
 DIAGNOSTICS = {
     "wind_speed": wind_speed,
+    "wind_direction": wind_direction,
     "theta": theta,
 }
