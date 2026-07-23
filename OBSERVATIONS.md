@@ -96,3 +96,14 @@ it happened), and the local run afterwards confirmed 4 passed. Guard:
 when a verify command errors for environmental reasons, stop the chain
 and re-verify before committing. Backstop: CI. The cache setting is now
 fixed permanently in .zshrc.
+
+## ASL extension: emission failure confirmed as reliable, not occasional
+
+The 32B read the ASL contract and produced a correct sector-masked
+minimum-finder — but emitted the entire write_file call into the
+final-answer slot, unrecoverable because the docstring's unescaped
+quotes make the blob unparseable as JSON or a Python literal. Fourth
+occurrence of the final-answer emission failure. Completed by hand;
+20 passed with the correct changed-file set. Conclusion: single-shot
+write-heavy tasks on the 32B need the human fallback ready, and the
+harness limitation is bounded but not fixable by better parsing alone.
