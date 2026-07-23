@@ -86,3 +86,13 @@ for the third time. The single-quote recovery fix handles calls the
 extractor processes, but a call that lands in the final-answer branch
 bypasses it. Bounded, known limitation; careful manual verification
 catches its consequences.
+
+## Workflow note: environment errors can silently skip verification
+
+During the SAM extension, a stale UV_CACHE_DIR pointing at an unplugged
+external drive killed the pytest step in a chained sequence, and the
+commit and push proceeded with unverified code. CI caught it (green, as
+it happened), and the local run afterwards confirmed 4 passed. Guard:
+when a verify command errors for environmental reasons, stop the chain
+and re-verify before committing. Backstop: CI. The cache setting is now
+fixed permanently in .zshrc.
