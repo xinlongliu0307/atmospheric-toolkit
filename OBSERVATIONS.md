@@ -107,3 +107,19 @@ occurrence of the final-answer emission failure. Completed by hand;
 20 passed with the correct changed-file set. Conclusion: single-shot
 write-heavy tasks on the 32B need the human fallback ready, and the
 harness limitation is bounded but not fixable by better parsing alone.
+
+## ZW3 extension: analytic contract passed at machine precision
+
+Fourier ZW3 index landed with all seven contract tests green at near
+machine precision, including wave-2 orthogonality (leakage < 1e-9) and
+zonal-mean invariance. [Record here whether the 32B produced the file
+or the hand fallback was used, and update the emission-failure count.]
+Suite at 27; commit 913e1e1.
+
+## ZW3 extension: analytic contract passed at machine precision
+
+Fourier ZW3 index landed with all seven contract tests green at near
+machine precision, including wave-2 orthogonality (leakage < 1e-9) and
+zonal-mean invariance. The 32B run hit the final-answer emission failure
+again (fifth occurrence); the hand fallback was used, and the registry
+was updated manually as planned. Suite at 27; commit 913e1e1.
