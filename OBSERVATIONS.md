@@ -191,3 +191,37 @@ wave-controlled season.
 CAUTION: the climatological match (ZW3 trough 230.7E, ASL mean 230.8E) is
 weaker evidence than it appears, since the sector midpoint is 234E and any
 centrally distributed detection would land near there.
+
+## ZW3-ASL: diagnostics resolve the pooled slope into two regimes
+
+Range restriction refuted: phase-anomaly variance is flat across seasons
+(sd 19-25 deg), and slopes separate with correlations, so the seasonal
+contrast is physical.
+
+Regression dilution confirmed independently of season: terciles on
+deseasonalised amplitude give slopes 0.207, 0.398, 0.544 while being
+seasonally balanced (strong tercile is if anything winter-enriched, which
+works against the gradient).
+
+Within-season terciles are decisive. DJF weak wave 0.311+/-0.179, DJF
+strong wave 0.904+/-0.234 (consistent with unity, ~4 sigma from zero).
+JJA weak 0.115+/-0.160, strong 0.139+/-0.275 (both null). The pooled 0.33
+averages a near-complete summer coupling with an absent winter one.
+
+Boundary contamination negligible: excluding the 10 sector-edge months
+moves the slope 0.328 -> 0.351.
+
+HYPOTHESIS REFUTED. Predicted that coupling weakens with meridional
+separation between the wave (49S) and the ASL centre (67.8S DJF, 71.6S
+JJA). The latitude profile shows the opposite: slope peaks at 49S (0.328)
+and decays poleward to 0.057 at 70S, i.e. strongest where they are
+furthest apart. Steering is a mid-latitude waveguide phenomenon, not a
+local one. Note also that ZW3 phase at 65S does not track ASL longitude
+(DJF slope -0.009), so the high-latitude field is not well described by
+wave 3.
+
+Alternative interpretation, untested: the ASL as a time-average of
+transient cyclones (cf. Fogt et al. 2012) would have its winter position
+set by a strong storm track that swamps the stationary wave, with the wave
+dominating only in the quieter summer. Testing needs daily fields and an
+eddy-activity metric.
