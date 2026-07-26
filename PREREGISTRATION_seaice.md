@@ -61,3 +61,30 @@ H3  NOT SUPPORTED, and mis-specified. Full record r = +0.094 (p 0.067);
 
 Note: one dead-code block in node_longitude was removed after the run;
 H2 values verified unchanged.
+
+## Post-hoc robustness check on H2 (recorded 2026-07-26)
+
+H2 was supported under the pre-registered node estimator (argmax of a
+west-minus-east contrast): slope +0.32, replicated in both halves. An
+alternative sign-weighted-centroid estimator gives approximately zero
+(-0.003 full record; -0.035 and +0.029 in the halves, opposite signs).
+The finding is therefore NOT robust to the estimator choice, and the
+pre-registered slope should not be quoted without this caveat.
+
+Suspected cause: the argmax estimator has a node-anomaly sd of 44.2 deg
+within a 110 deg candidate window, exceeding the 31.8 deg a uniform
+distribution would give, which indicates boundary saturation and
+near-binary behaviour rather than position estimation. Diagnosed in
+scripts/diagnose_node_estimator.py.
+
+METHODOLOGICAL LESSON, more important than the physics: the argmax result
+replicated cleanly across two independent halves (+0.309, +0.354). Split-
+sample replication protects against sampling noise but not against a
+systematically biased instrument, because a stable artefact replicates
+perfectly. Robustness to methodological choices must be tested separately
+from, and in addition to, out-of-sample replication.
+
+The ZW3 chain test is UNDERPOWERED under both estimators (expected r
+approximately 0.046 against a detectable threshold of 0.089 at n_eff
+~490) and will not be pre-registered. This dataset cannot resolve the
+chain at monthly resolution.
