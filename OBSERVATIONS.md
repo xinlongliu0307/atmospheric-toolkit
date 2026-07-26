@@ -140,3 +140,31 @@ Significance: the analytic contract could not test the phase sign
 convention, because the test and the implementation shared it. Recovering
 independently chosen published ridge longitudes provides the external
 check that the synthetic oracle structurally could not.
+
+## SAM and ASL from ERA5 MSLP (1979-2025, 564 months)
+
+Climatology reproduces three published features independently:
+  - Absolute central pressure shows the semiannual oscillation (minima
+    April 975.1 and October 970.6 hPa; maxima January 981.0 and June
+    977.4 hPa).
+  - Relative central pressure shows instead a winter minimum (August
+    -11.7 hPa) and summer maximum (December/January -7.6 hPa), the
+    contrast documented by Hosking et al. 2013 (doi:10.1175/JCLI-D-12-00813.1).
+  - Longitude migrates from ~224E in JJA to ~242E in DJF, consistent with
+    the documented ~220E winter to ~250E summer shift and with Turner
+    et al. 2013 (doi:10.1002/joc.3558).
+
+Correlations with deseasonalised anomalies, autocorrelation-adjusted:
+  absolute central pressure r = -0.770 (n_eff 477, p 7e-95)
+  relative central pressure r = -0.031 (p 0.48)
+  ASL longitude             r = +0.090 (p 0.035, fails Bonferroni; treat as null)
+
+Interpretation: the ASL's absolute depth is largely the local expression
+of SAM; its depth relative to the sector background is independent of it.
+This independently recovers the motivation for the relative-pressure
+metric.
+
+CAVEAT PENDING TEST: the ASL sector is 36% of the 65S circle, so the ASL
+contributes to the southern node of a zonal-mean SAM index. The -0.770 is
+partly circular. Sensitivity test with the sector excluded is in
+scripts/test_sam_asl_circularity.py.
