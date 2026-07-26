@@ -225,3 +225,28 @@ transient cyclones (cf. Fogt et al. 2012) would have its winter position
 set by a strong storm track that swamps the stationary wave, with the wave
 dominating only in the quieter summer. Testing needs daily fields and an
 eddy-activity metric.
+
+## Out-of-sample replication: the strong-wave summer result FAILS
+
+Split 1979-2001 / 2002-2025, anomalies centred within each half.
+
+REPLICATES:
+  SAM vs ASL absolute central pressure: slope -1.773+/-0.149 (r -0.584)
+  and -1.881+/-0.157 (r -0.579). Exceptional stability. Headline result.
+  ZW3 phase vs ASL longitude, all months: +0.308+/-0.084 and
+  +0.207+/-0.075. Both significant, overlapping. Modest but real.
+  DJF phase vs longitude: +0.412+/-0.205 and +0.377+/-0.177.
+
+DOES NOT REPLICATE:
+  DJF strong-wave slope. Full record gave +0.904+/-0.234; halves give
+  +0.198+/-0.520 and +0.469+/-0.331, both null. JJA strong-wave sign flips
+  (-0.289, +0.624). At n~23 nothing is estimable. The amplitude-dilution
+  gradient is now also in doubt, sharing the same construction.
+
+Likely cause: full-record calendar-month centring retains shared
+low-frequency covariance between phase and longitude that within-half
+centring removes. Tested in scripts/test_lowfreq_inflation.py.
+
+METHODOLOGICAL LESSON: >40 tests were run on 564 months across four
+scripts. The one finding selected as most striking failed replication.
+Split-sample validation should be run before, not after, interpretation.
