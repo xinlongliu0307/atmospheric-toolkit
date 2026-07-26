@@ -31,3 +31,32 @@ def find_asl(lons: np.ndarray, lats: np.ndarray, slp: np.ndarray) -> dict:
         "central_pressure": central_pressure,
         "relative_central_pressure": central_pressure - float(np.mean(sector)),
     }
+
+
+def asl_timeseries(lons: np.ndarray, lats: np.ndarray, slp_stack: np.ndarray) -> dict:
+    """
+    Apply find_asl to each time step in a 3D stack of sea-level-pressure fields.
+
+    Parameters:
+        lons: 1D array of longitudes (degrees east).
+        lats: 1D array of latitudes (degrees north, negative south).
+        slp_stack: 3D array of pressure, shape (time, len(lats), len(lons)).
+
+    Returns:
+        dict with keys lon, lat, central_pressure, and
+        relative_central_pressure, each a 1D array of length time.
+
+    Raises:
+        ValueError: if slp_stack is not 3D.
+    """
+    if slp_stack.ndim != 3:
+        raise ValueError("slp_stack must be a 3D array")
+
+    nt = slp_stack.shape[0]
+    out = {k: np.empty(nt) for k in
+           ("lon", "lat", "central_pressure", "relative_central_pressure")}
+    for t in range(nt):
+        step = find_asl(lons, lats, slp_stack[t])
+        for k in out:
+            out[k][t] = step[k]
+    return out
