@@ -117,3 +117,35 @@ A well-posed reformulation, for a future pre-registration only: regress
 the SIC anomaly at each longitude on the ASL longitude anomaly and assess
 the resulting spatial pattern. This requires no node to exist. It was not
 run here, to avoid post-hoc testing on the same data.
+
+## H2 construct measured non-existent (recorded 2026-07-26)
+
+A validity-aware estimator (windtools/dipole.py, 11 analytic tests) was
+built to replace the boundary-saturated argmax. It fixed the pathology
+(9.4% of nodes near a window edge, against 43.4%) and rejects white noise
+absolutely (3000 draws, max r2 0.120, none above the 0.5 threshold).
+
+It does not, however, discriminate structure. Against the correct null,
+AR(1) profiles matched to the data's own longitudinal autocorrelation of
+0.985, red noise passes at 53.1% with median r2 0.521; the observations
+pass at 55.0% with median r2 0.547. Indistinguishable.
+
+Cause: the 130 deg window spans one fitted period while the field
+decorrelates over ~66 deg, leaving ~2 independent points across the
+window. Any smooth profile is a wavenumber-1 pattern at that resolution.
+
+An antisymmetry discriminator was attempted and is INVALID: it anchors on
+the fitted node rather than the structure's own centre, so monopoles
+score +0.63 to +1.00, higher than ideal dipoles. It measures nothing and
+its observed distribution should be disregarded.
+
+CONCLUSION: the sector sea ice anomaly does not contain a locatable
+dipole node at monthly resolution. The withdrawn H2 asked about a
+structure that is not present in this field. This closes the question by
+measurement rather than by a failed correlation, and explains why three
+estimators disagreed: there was nothing for them to agree about.
+
+The one real signal in the descriptive pass is seasonal: 28% valid in
+DJF against 70-75% in JJA-SON, consistent with the ice edge lying inside
+the 60-75S band in winter. This reflects anomaly magnitude and smoothness,
+not dipole structure.
