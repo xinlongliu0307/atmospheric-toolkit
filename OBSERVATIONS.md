@@ -168,3 +168,26 @@ CAVEAT PENDING TEST: the ASL sector is 36% of the 65S circle, so the ASL
 contributes to the southern node of a zonal-mean SAM index. The -0.770 is
 partly circular. Sensitivity test with the sector excluded is in
 scripts/test_sam_asl_circularity.py.
+
+## Circularity test and the ZW3-ASL relationship
+
+Sector-excluded SAM (231 of 360 longitudes) correlates 0.871 with the
+full-circle index. SAM vs absolute central pressure drops from -0.770 to
+-0.585 (34% of variance); quote -0.585. SAM vs relative central pressure
+stays null (-0.031 to +0.015), so the independence is robust rather than
+an artefact of construction. Seasonal: DJF -0.691, MAM -0.395,
+JJA -0.603, SON -0.625.
+
+ZW3 phase vs ASL longitude: r = +0.240 (p 1e-8) but regression slope only
++0.328 +/- 0.056, twelve standard errors below unity. The wave modulates
+the position; it does not carry the low. ZW3 amplitude vs relative central
+pressure r = -0.177 (3% of variance), correct sign but weak.
+
+Seasonal: wave control on longitude strongest in MAM (+0.335) and DJF
+(+0.314), weakest in JJA (+0.131), which is the inverse of the amplitude
+seasonality. Autumn is simultaneously the least SAM-controlled and most
+wave-controlled season.
+
+CAUTION: the climatological match (ZW3 trough 230.7E, ASL mean 230.8E) is
+weaker evidence than it appears, since the sector midpoint is 234E and any
+centrally distributed detection would land near there.
