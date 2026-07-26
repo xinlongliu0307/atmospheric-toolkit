@@ -88,3 +88,32 @@ The ZW3 chain test is UNDERPOWERED under both estimators (expected r
 approximately 0.046 against a detectable threshold of 0.089 at n_eff
 ~490) and will not be pre-registered. This dataset cannot resolve the
 chain at monthly resolution.
+
+## H2 WITHDRAWN (recorded 2026-07-26)
+
+Diagnostic verdict: the pre-registered argmax node estimator is
+boundary-saturated. 43.4% of months fall exactly on a candidate boundary
+(23.8% at 170E, 19.7% at 280E); the decile distribution is U-shaped; the
+node sd of 44.7 deg exceeds the 31.8 deg of a uniform distribution over
+the window. A median-split binary flag reproduces r = +0.182 against the
+estimator's own +0.211, so the apparent signal is a west/east dichotomy,
+not a position relationship.
+
+Two estimators without those pathologies give null results:
+  B sign-weighted centroid: -0.003 +/- 0.013 (halves -0.035, +0.029)
+  C fitted-sinusoid phase:  -0.007 +/- 0.055 (halves +0.043, -0.035)
+
+The three estimators intercorrelate at only +0.131, -0.093, and +0.152.
+Three methods targeting one physical quantity would agree; these do not,
+indicating the target is not well defined. The sector sea ice anomaly
+profile frequently lacks a single locatable dipole node, so the
+pre-registered question presupposed a structure that is often absent.
+That presupposition was never itself tested.
+
+CONCLUSION: no reliable evidence that ASL longitude displaces a sea ice
+dipole node. The +0.32 slope is withdrawn and must not be cited.
+
+A well-posed reformulation, for a future pre-registration only: regress
+the SIC anomaly at each longitude on the ASL longitude anomaly and assess
+the resulting spatial pattern. This requires no node to exist. It was not
+run here, to avoid post-hoc testing on the same data.
