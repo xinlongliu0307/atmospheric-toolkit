@@ -250,3 +250,25 @@ centring removes. Tested in scripts/test_lowfreq_inflation.py.
 METHODOLOGICAL LESSON: >40 tests were run on 564 months across four
 scripts. The one finding selected as most striking failed replication.
 Split-sample validation should be run before, not after, interpretation.
+
+## Low-frequency inflation hypothesis: REFUTED
+
+Slopes are insensitive to detrending (0.328 -> 0.329) and high-pass
+filtering (-> 0.303). Neither series trends significantly (p 0.12, 0.89),
+and their low-frequency components correlate -0.219, which would deflate
+a positive slope. Second hypothesis refuted in this analysis, after the
+meridional-proximity one.
+
+Actual explanation: n=23-24 cannot estimate a slope. Precision-weighted
+combination of the halves gives 0.39+/-0.28 (1.4 sigma). The pooled
+0.904+/-0.234 was conditional on a post-hoc subset.
+
+Under high-pass the seasonal contrast narrows (DJF 0.519->0.442,
+JJA 0.167->0.223), i.e. ~1.3 sigma. Suggestive, not established.
+
+LOCKED FINDINGS:
+  1. SAM -> ASL absolute central pressure: -1.8 hPa per sd, r ~ -0.58,
+     ~34% of interannual variance. Replicated across halves.
+  2. ZW3 phase -> ASL longitude: slope ~0.30, robust to filtering,
+     replicated (0.308, 0.207). Summer strengthening suggestive only.
+  NOT SUPPORTED: amplitude-dependent coupling; near-unity summer slope.
