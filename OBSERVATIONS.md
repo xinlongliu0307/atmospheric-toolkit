@@ -123,3 +123,20 @@ machine precision, including wave-2 orthogonality (leakage < 1e-9) and
 zonal-mean invariance. The 32B run hit the final-answer emission failure
 again (fifth occurrence); the hand fallback was used, and the registry
 was updated manually as planned. Suite at 27; commit 913e1e1.
+
+## ZW3 real-data validation against ERA5 (1979-2025, 564 months, 49S)
+
+Amplitude seasonality: JJA 54.6 m, DJF 40.7 m, July maximum 55.7 m,
+December minimum 32.1 m. Winter maximum confirmed, consistent with the
+documented winter enhancement of SH stationary wave 3.
+
+Phase: circular mean 50.7 deg on the 120-deg cycle, placing ridges near
+51E, 171E, and 291E. These fall within a few degrees of the reference
+longitudes used by Raphael (2004), namely 49S at 50E, 166E, and 76W
+(doi:10.1029/2004GL020365; locations as stated in Raphael 2007,
+doi:10.1029/2006JD007852). Phase clustering R = 0.51.
+
+Significance: the analytic contract could not test the phase sign
+convention, because the test and the implementation shared it. Recovering
+independently chosen published ridge longitudes provides the external
+check that the synthetic oracle structurally could not.
