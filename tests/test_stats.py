@@ -156,3 +156,15 @@ def test_deseason_promotes_integer_input_to_float():
     x = np.arange(len(months))
     out = deseason(x, months)
     assert np.asarray(out).dtype.kind == "f"
+
+
+def test_effective_n_matches_the_corrcoef_form_exactly():
+    # The analysis scripts used np.corrcoef on the lagged sub-series.
+    # Extraction must reproduce that bit for bit, not merely closely,
+    # so that published p values do not move.
+    rng = np.random.default_rng(11)
+    x, y = _ar1(rng, 0.8, 400), _ar1(rng, 0.7, 400)
+    rx = np.corrcoef(x[:-1], x[1:])[0, 1]
+    ry = np.corrcoef(y[:-1], y[1:])[0, 1]
+    expected = min(max(3.0, 400 * (1 - rx * ry) / (1 + rx * ry)), 400.0)
+    assert effective_n(x, y) == pytest.approx(expected, rel=1e-15)

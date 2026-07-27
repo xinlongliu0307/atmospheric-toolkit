@@ -15,6 +15,7 @@ import xarray as xr
 from scipy import stats
 from windtools.sam import sam_index
 from windtools.asl import asl_timeseries
+from windtools.stats import deseason, corr_neff
 
 ds = xr.open_dataset("data/era5_mslp_monthly_40S80S.nc")
 pvar = "msl" if "msl" in ds else list(ds.data_vars)[0]
@@ -40,25 +41,6 @@ sam = sam_index(p40, p65)
 # --- ASL ---
 asl = asl_timeseries(lons, lats, slp.values)
 
-def deseason(x):
-    out = np.empty_like(x, dtype=float)
-    for m in range(1, 13):
-        sel = months == m
-        out[sel] = x[sel] - x[sel].mean()
-    return out
-
-def corr_with_neff(x, y):
-    x, y = deseason(x), deseason(y)
-    r = np.corrcoef(x, y)[0, 1]
-    r1x = np.corrcoef(x[:-1], x[1:])[0, 1]
-    r1y = np.corrcoef(y[:-1], y[1:])[0, 1]
-    n = len(x)
-    neff = n * (1 - r1x * r1y) / (1 + r1x * r1y)
-    neff = max(3.0, min(neff, float(n)))
-    t = r * np.sqrt((neff - 2) / max(1e-12, 1 - r**2))
-    p = 2 * stats.t.sf(abs(t), df=neff - 2)
-    return r, neff, p
-
 print("\n--- ASL climatology (sanity check) ---")
 print("month  central(hPa)  relative(hPa)   lon(E)   lat(S)")
 for m in range(1, 13):
@@ -71,7 +53,7 @@ print("\n--- SAM vs ASL (deseasonalised) ---")
 for label, series in (("absolute central pressure", asl["central_pressure"]),
                       ("relative central pressure", asl["relative_central_pressure"]),
                       ("ASL longitude", asl["lon"])):
-    r, neff, p = corr_with_neff(sam, series)
+    r, neff, p = corr_neff(deseason(sam, months), deseason(series, months))
     print(f"{label:28s} r = {r:+.3f}   n_eff = {neff:6.1f}   p = {p:.2e}")
 
 print("\nExpectation: strong negative r with absolute central pressure "

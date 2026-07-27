@@ -150,5 +150,7 @@ def _lag_1_autocorr(values: np.ndarray) -> float:
     float
         The lag-1 autocorrelation coefficient, computed non-circularly.
     """
-    n = len(values)
-    return ((values[:-1] - values.mean()) * (values[1:] - values.mean())).sum() / (n - 1) / values.var(ddof=0)
+    values = np.asarray(values, dtype=float)
+    if values.size < 3:
+        return 0.0
+    return float(np.corrcoef(values[:-1], values[1:])[0, 1])
