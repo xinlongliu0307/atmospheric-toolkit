@@ -12,6 +12,7 @@ Method choices:
     the regression slope of ASL longitude on phase anomaly should be ~1.
 """
 import numpy as np
+from windtools.stats import deseason as _deseason, circ_mean, phase_anomaly, corr_neff
 import xarray as xr
 from scipy import stats
 from windtools.zw3 import zw3_index
@@ -63,35 +64,19 @@ print(f"aligned records: {len(months)} months")
 
 # --- anomalies ---
 def deseason(x):
-    out = np.empty_like(x, dtype=float)
-    for m in range(1, 13):
-        s = months == m
-        out[s] = x[s] - x[s].mean()
-    return out
+    return _deseason(x, months)
 
 
 def circ_mean_120(p):
-    a = np.deg2rad(p * 3.0)
-    return (np.rad2deg(np.angle(np.mean(np.exp(1j * a)))) / 3.0) % 120.0
+    return circ_mean(p, 120.0)
 
 
 def phase_anom(p):
-    out = np.empty_like(p, dtype=float)
-    for m in range(1, 13):
-        s = months == m
-        ref = circ_mean_120(p[s])
-        out[s] = (p[s] - ref + 60.0) % 120.0 - 60.0   # wrapped into (-60, 60]
-    return out
+    return phase_anomaly(p, months, 120.0)
 
 
 def corr(x, y):
-    r = np.corrcoef(x, y)[0, 1]
-    rx = np.corrcoef(x[:-1], x[1:])[0, 1]
-    ry = np.corrcoef(y[:-1], y[1:])[0, 1]
-    n = len(x)
-    neff = min(max(3.0, n * (1 - rx * ry) / (1 + rx * ry)), float(n))
-    t = r * np.sqrt((neff - 2) / max(1e-12, 1 - r**2))
-    return r, neff, 2 * stats.t.sf(abs(t), df=neff - 2)
+    return corr_neff(x, y)
 
 
 pa = phase_anom(phs)
