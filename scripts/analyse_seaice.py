@@ -20,6 +20,7 @@ independent of the reanalysis framework. NSIDC passive-microwave
 concentration would be the stricter choice for publication.
 """
 import numpy as np
+from windtools.stats import deseason as _deseason, corr_neff
 import xarray as xr
 from scipy import stats
 from windtools.zw3 import zw3_index
@@ -82,13 +83,7 @@ circumpolar = np.nanmean(sic_lon, axis=1)
 
 
 def deseason(x, mask):
-    mm = months[mask]
-    out = np.empty(mask.sum())
-    xs = x[mask]
-    for m in range(1, 13):
-        s = mm == m
-        out[s] = xs[s] - xs[s].mean()
-    return out
+    return _deseason(x[mask], months[mask])
 
 
 def node_longitude(mask):
@@ -110,13 +105,7 @@ def node_longitude(mask):
 
 
 def corr(x, y):
-    r = np.corrcoef(x, y)[0, 1]
-    rx = np.corrcoef(x[:-1], x[1:])[0, 1]
-    ry = np.corrcoef(y[:-1], y[1:])[0, 1]
-    n = len(x)
-    neff = min(max(3.0, n * (1 - rx * ry) / (1 + rx * ry)), float(n))
-    t = r * np.sqrt((neff - 2) / max(1e-12, 1 - r ** 2))
-    return r, neff, 2 * stats.t.sf(abs(t), df=neff - 2)
+    return corr_neff(x, y)
 
 
 samples = {"FULL 1979-2025": np.ones(len(months), bool),
