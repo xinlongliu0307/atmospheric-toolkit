@@ -28,8 +28,15 @@ def dipole_node(lons: np.ndarray, anomaly: np.ndarray) -> dict:
     are therefore reported as invalid. This is intended: a step near the
     edge is a plateau rather than a dipole.
 
-    Known limitation: a broad monopole centred in the window can have
-    substantial wavenumber-1 content and may be reported as valid.
+    IMPORTANT LIMITATION. The validity flag distinguishes large-scale from
+    small-scale structure, not dipoles from monopoles. A centred Gaussian
+    of width 30-40 degrees on a 130 degree window returns r_squared of
+    0.96-1.00 and valid=True despite containing no dipole. More generally,
+    on a field whose decorrelation length is a substantial fraction of the
+    window, red noise passes at the same rate as real data. Use this
+    estimator only where the window is long compared with the field's
+    decorrelation length, and validate against a matched red-noise null
+    before interpreting any node position.
 
     Parameters:
         lons: 1D array of longitudes (degrees east), monotonic.

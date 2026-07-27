@@ -4,6 +4,7 @@ Order is deliberate: analytic check, then degeneracy diagnostic, then the
 single primary test.
 """
 import numpy as np
+from windtools.stats import deseason as _deseason, circ_mean, phase_anomaly, effective_n
 import xarray as xr
 from scipy import stats
 from windtools.zw3 import zw3_index
@@ -53,33 +54,19 @@ years = slp[mt].dt.year.values
 
 
 def circ_mean_120(p):
-    a = np.deg2rad(p * 3.0)
-    return (np.rad2deg(np.angle(np.mean(np.exp(1j * a)))) / 3.0) % 120.0
+    return circ_mean(p, 120.0)
 
 
 def phase_anom(p, mask):
-    mm, ps = months[mask], p[mask]
-    out = np.empty(mask.sum())
-    for k in range(1, 13):
-        s = mm == k
-        out[s] = (ps[s] - circ_mean_120(ps[s]) + 60.0) % 120.0 - 60.0
-    return out
+    return phase_anomaly(p[mask], months[mask], 120.0)
 
 
 def deseason(x, mask):
-    mm, xs = months[mask], x[mask]
-    out = np.empty(mask.sum())
-    for k in range(1, 13):
-        s = mm == k
-        out[s] = xs[s] - xs[s].mean()
-    return out
+    return _deseason(x[mask], months[mask])
 
 
 def neff(x, y):
-    rx = np.corrcoef(x[:-1], x[1:])[0, 1]
-    ry = np.corrcoef(y[:-1], y[1:])[0, 1]
-    n = len(x)
-    return min(max(3.0, n * (1 - rx * ry) / (1 + rx * ry)), float(n))
+    return effective_n(x, y)
 
 
 print("=== P1. Analytic check: quadrature between v and Z phases ===")
