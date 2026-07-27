@@ -7,6 +7,7 @@ within-half centring. Test by re-estimating the slope after removing
 progressively more low-frequency variance.
 """
 import numpy as np
+from windtools.stats import deseason, circ_mean, phase_anomaly
 import xarray as xr
 from scipy import stats
 from windtools.zw3 import zw3_index
@@ -46,24 +47,15 @@ years = slp[mt].dt.year.values
 
 
 def circ_mean_120(p):
-    a = np.deg2rad(p * 3.0)
-    return (np.rad2deg(np.angle(np.mean(np.exp(1j * a)))) / 3.0) % 120.0
+    return circ_mean(p, 120.0)
 
 
 def pa_full(p):
-    out = np.empty_like(p, dtype=float)
-    for m in range(1, 13):
-        s = months == m
-        out[s] = (p[s] - circ_mean_120(p[s]) + 60.0) % 120.0 - 60.0
-    return out
+    return phase_anomaly(p, months, 120.0)
 
 
 def ds_full(x):
-    out = np.empty_like(x, dtype=float)
-    for m in range(1, 13):
-        s = months == m
-        out[s] = x[s] - x[s].mean()
-    return out
+    return deseason(x, months)
 
 
 def detrend(x):
