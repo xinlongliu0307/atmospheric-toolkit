@@ -7,6 +7,7 @@ independent halves and asks whether each finding replicates in both.
 A result present in one half only is not a result.
 """
 import numpy as np
+from windtools.stats import circ_mean
 import xarray as xr
 from scipy import stats
 from windtools.zw3 import zw3_index
@@ -55,8 +56,7 @@ halves = {"1979-2001": years <= 2001, "2002-2025": years >= 2002}
 
 
 def circ_mean_120(p):
-    a = np.deg2rad(p * 3.0)
-    return (np.rad2deg(np.angle(np.mean(np.exp(1j * a)))) / 3.0) % 120.0
+    return circ_mean(p, 120.0)
 
 
 def anoms(sub):
