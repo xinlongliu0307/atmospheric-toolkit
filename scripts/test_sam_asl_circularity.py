@@ -6,6 +6,7 @@ contributes to the southern node of a zonal-mean SAM index. Recompute SAM
 over the complementary longitudes only and compare.
 """
 import numpy as np
+from windtools.stats import deseason as _deseason, corr_neff
 import xarray as xr
 from scipy import stats
 from windtools.sam import sam_index
@@ -35,21 +36,10 @@ sam_excl = sam_index(zmean(-40.0, outside), zmean(-65.0, outside))
 asl = asl_timeseries(lons, lats, slp.values)
 
 def deseason(x):
-    out = np.empty_like(x, dtype=float)
-    for m in range(1, 13):
-        s = months == m
-        out[s] = x[s] - x[s].mean()
-    return out
+    return _deseason(x, months)
 
 def corr(x, y):
-    x, y = deseason(x), deseason(y)
-    r = np.corrcoef(x, y)[0, 1]
-    rx = np.corrcoef(x[:-1], x[1:])[0, 1]
-    ry = np.corrcoef(y[:-1], y[1:])[0, 1]
-    n = len(x)
-    neff = min(max(3.0, n * (1 - rx * ry) / (1 + rx * ry)), float(n))
-    t = r * np.sqrt((neff - 2) / max(1e-12, 1 - r**2))
-    return r, neff, 2 * stats.t.sf(abs(t), df=neff - 2)
+    return corr_neff(deseason(x), deseason(y))
 
 print(f"\nSAM(full) vs SAM(sector excluded): r = "
       f"{np.corrcoef(deseason(sam_full), deseason(sam_excl))[0,1]:+.3f}")
