@@ -35,3 +35,25 @@ H1. Regressing ASL longitude anomaly on ZW3(v) phase anomaly yields a
 
 No other test will be run on these data. Any further quantity computed is
 exploratory and labelled as such.
+
+## Outcomes (recorded 2026-07-26)
+
+P1 CONFIRMED EXACTLY. Circular-mean offset phi_v - phi_Z = 29.9 deg
+   against a predicted 30.0, concentration R = 0.997. A sign error in the
+   phase convention would have given approximately 90 deg. This validates
+   the zw3_index phase convention independently for a third time, confirms
+   both the Z and v calculations, and shows the monthly mean 500 hPa flow
+   at 49S is quasi-geostrophic to high accuracy.
+
+D1 NEAR-DEGENERATE. corr(phase anomaly Z, phase anomaly v) = +0.998,
+   far above the 0.95 threshold set in advance.
+
+H1 UNINFORMATIVE, as pre-specified. Slopes +0.320 +/- 0.055 (full),
+   +0.297 +/- 0.083 and +0.207 +/- 0.074 (halves), against the Z-based
+   +0.328, +0.308, +0.207. The second half agrees to three decimals.
+   This is the same measurement repeated, not an independent replication,
+   and it must not be cited as corroboration of the 0.30 slope.
+
+VALUE OF THE REGISTRATION: without the pre-specified degeneracy check,
+this result reads as independent confirmation at p = 1.25e-08. It is not.
+The registration caught it prospectively.

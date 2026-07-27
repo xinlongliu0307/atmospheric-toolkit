@@ -86,3 +86,30 @@ that proved incomplete or wrong: 6. Findings surviving all checks: 2.
 Every item above is recorded in OBSERVATIONS.md and
 PREREGISTRATION_seaice.md, timestamped in the commit history, including
 the pre-registrations written before the analyses that tested them.
+
+## Lesson 5: the method working prospectively
+
+The four lessons above are post-mortems. This one is not.
+
+A sensitivity test was planned using a meridional-wind formulation of the
+same circulation index, on the reasoning that a different variable and a
+different physical quantity would provide independent corroboration of a
+surviving finding. Before running it, the registration required two things
+to be stated in advance: an analytic prediction for the phase relationship
+between the two indices, and a degeneracy diagnostic to be reported before
+the primary test.
+
+The analytic prediction was confirmed to a tenth of a degree, which
+validated both implementations. The degeneracy diagnostic came out at
+0.998. The two predictors were the same quantity plus a constant offset,
+and the primary test was therefore uninformative by construction.
+
+Its result: slope +0.320 +/- 0.055, p = 1.25e-08, replicating in both
+independent halves, from a different variable. Reported without the
+degeneracy check, that is a compelling independent confirmation. It is
+nothing of the kind. The registration caught it before the data was
+examined rather than after a reviewer asked.
+
+The general form: when a test uses a predictor derived from or physically
+related to the original one, compute their correlation and state the
+threshold at which the test becomes uninformative BEFORE running it.
