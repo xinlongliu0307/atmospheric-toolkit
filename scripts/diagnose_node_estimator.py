@@ -8,6 +8,7 @@ estimator: the phase of a single sinusoid fitted to the sector anomaly
 profile, which has no discrete search and no centroid shrinkage.
 """
 import numpy as np
+from windtools.stats import deseason as _deseason
 import xarray as xr
 from scipy import stats
 from windtools.asl import asl_timeseries
@@ -100,12 +101,7 @@ for n1, n2, lab in ((node_a, nb, "A vs B"), (node_a, node_c, "A vs C"),
 
 
 def deseason(x, mask):
-    mm, xs = months[mask], x[mask]
-    out = np.empty(mask.sum())
-    for k in range(1, 13):
-        s = mm == k
-        out[s] = xs[s] - xs[s].mean()
-    return out
+    return _deseason(x[mask], months[mask])
 
 
 print("\n--- H2 under all three estimators ---")
